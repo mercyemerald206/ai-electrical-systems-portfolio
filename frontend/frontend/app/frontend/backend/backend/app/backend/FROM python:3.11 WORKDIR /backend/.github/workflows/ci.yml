@@ -1,0 +1,41 @@
+name: Full CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # FRONTEND BUILD
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      # BACKEND BUILD
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Build Backend
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      # DOCKER BUILD
+      - name: Build Docker Images
+        run: |
+          docker build -t ai-frontend ./frontend
+          docker build -t ai-backend ./backend
