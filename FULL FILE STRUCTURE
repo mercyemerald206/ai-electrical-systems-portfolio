@@ -1,0 +1,9 @@
+ai-electrical-systems-portfolio/
+│
+├── frontend/
+├── backend/
+├── infra/
+├── .github/workflows/
+├── docker-compose.yml
+├── README.md
+└── .gitignore
